@@ -55,7 +55,7 @@ def generate_report():
     # 呼叫 Claude 進行推論 (API 預設不將此資料用於模型訓練)
     client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
     response = client.messages.create(
-        model="claude-4-6-sonnet-latest",
+        model="claude-sonnet-4-6",
         max_tokens=250,
         system="你是一個專門服務高資產客戶的理性 AI 財務顧問。說話精準、客觀，不帶感情色彩。",
         messages=[{"role": "user", "content": prompt}]
