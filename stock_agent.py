@@ -6,7 +6,9 @@ from anthropic import Anthropic
 
 # 1. 設定你的追蹤標的與持有股數
 portfolio = {
-    "2542.TW": {"name": "京城銀", "shares": 24000},
+    "2542.TW": {"name": "興富發", "shares": 42200},
+    "2618.TW": {"name": "長榮航", "shares": 4000},
+    "2887.TW": {"name": "台新新光金", "shares": 17000},
     "3617.TW": {"name": "碩天", "shares": 0}  # 僅追蹤，未持有
 }
 
