@@ -73,7 +73,7 @@ def generate_report():
     # 呼叫 Claude 3.5 Sonnet
     client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
     response = client.messages.create(
-        model="claude-3-5-sonnet-latest", 
+        model="claude-sonnet-4-6",
         max_tokens=300, # 稍微調高一些，留空間給符號與正負號的 Token 消耗
         system="你是一個專門服務高資產客戶的理性 AI 財務顧問。說話精準、客觀，不帶感情色彩。",
         messages=[{"role": "user", "content": prompt}]
