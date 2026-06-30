@@ -1,4 +1,5 @@
 import os
+from datetime import datetime, timezone, timedelta
 import yfinance as yf
 import requests
 import ujson
@@ -16,28 +17,35 @@ portfolio = {
 }
 
 def fetch_stock_data():
-    """抓取台股市場數據，並計算漲幅與當天損益"""
+    """抓取台股市場數據，並進行日期防呆檢驗"""
     stock_summary = ""
     total_market_value = 0
-    total_daily_pnl = 0  # 當日總損益
+    total_daily_pnl = 0
+
+    # 1. 取得台灣目前的真實日期 (UTC+8)
+    tw_tz = timezone(timedelta(hours=8))
+    tw_today_str = datetime.now(tw_tz).strftime('%Y-%m-%d')
 
     for ticker, info in portfolio.items():
         stock = yf.Ticker(ticker)
-        # 修改為抓取最近 5 天的數據，確保能安全拿到前一個交易日的收盤價
         hist = stock.history(period="5d")
         
         if len(hist) >= 2:
-            # 倒數第一筆為今日收盤，倒數第二筆為昨日收盤
+            # 2. 取出 yfinance 資料的最後一筆日期，並轉為字串
+            last_record_date = hist.index[-1].strftime('%Y-%m-%d')
+            
+            # 3. 日期防呆：如果最後一筆資料的日期不是「台灣的今天」，直接跳過計算
+            if last_record_date != tw_today_str:
+                stock_summary += f"- {info['name']}: 今日未取得交易資料 (可能為國定假日或休市)\n"
+                continue
+            
+            # 確保是今天的資料後，才進行正常計算
             today_close = hist['Close'].iloc[-1]
             yesterday_close = hist['Close'].iloc[-2]
             
-            # 計算漲幅百分比
             change_percent = ((today_close - yesterday_close) / yesterday_close) * 100
-            
-            # 格式化個別股票基本回報
             stock_summary += f"- {info['name']} ({ticker.replace('.TW', '')}): {today_close:.2f} 元 (漲跌幅: {change_percent:+.2f}%)"
             
-            # 如果有持股，計算當天損益與目前市值
             if info['shares'] > 0:
                 daily_pnl = (today_close - yesterday_close) * info['shares']
                 market_value = today_close * info['shares']
