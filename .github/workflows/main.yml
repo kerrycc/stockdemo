@@ -2,9 +2,9 @@ name: Nightly Stock Agent Workflow
 
 on:
   schedule:
-    # 國際標準時間 (UTC) 15:00 等於台灣時間 (CST) 晚上 23:00
-    # 每天晚上 11 點自動啟動，僅在週一至週五 (交易日 1-5) 執行
-    - cron: '0 15 * * 1-5'
+    # 國際標準時間 (UTC) 10:00 等於台灣時間 (CST) 晚上 18:00
+    # 每天晚上 6 點自動啟動，僅在週一至週五 (交易日 1-5) 執行
+    - cron: '0 10 * * 1-5'
   workflow_dispatch: # 允許你在 GitHub 介面上手動點選按鈕、隨時測試觸發
 
 jobs:

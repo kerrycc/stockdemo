@@ -12,7 +12,7 @@ portfolio = {
     "2542.TW": {"name": "興富發", "shares": 42200},
     "2618.TW": {"name": "長榮航", "shares": 4000},
     "2887.TW": {"name": "台新新光金", "shares": 17000},
-    "3617.TW": {"name": "碩天", "shares": 0}  # 僅追蹤，未持有
+    "3617.TW": {"name": "碩天", "shares": 0}
 }
 
 def fetch_stock_data():
@@ -54,9 +54,9 @@ def fetch_stock_data():
 def generate_report():
     """將包含漲幅與損益的數據餵給 Claude 進行語意化分析"""
     stock_summary, total_market_value, total_daily_pnl = fetch_stock_data()
-    
+    print(stock_summary)
     prompt = f"""
-    你是一個冷計、理性的個人財務管家。請根據以下台股最新的收盤數據（包含漲跌幅與持股當日損益），為我撰寫一份簡短的睡前投資摘要。
+    你是一個冷靜、理性的個人財務管家。請根據以下台股最新的收盤數據（包含漲跌幅與持股當日損益），為我撰寫一份簡短的睡前投資摘要。
     
     【今日市場數據】
     {stock_summary}
