@@ -8,8 +8,7 @@ from anthropic import Anthropic
 # 1. 設定你的追蹤標的與持有股數
 portfolio = {
     "0056.TW": {"name": "元大高股息", "shares": 8000},
-    "2542.TW": {"name": "興富發", "shares": 42200},
-    "2887.TW": {"name": "台新新光金", "shares": 17000},
+    "2887.TW": {"name": "台新新光金", "shares": 17170},
     "3617.TW": {"name": "碩天", "shares": 0}
 }
 
